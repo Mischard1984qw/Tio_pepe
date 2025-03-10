@@ -1,0 +1,146 @@
+const agentsHtml = `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tío Pepe - Gestión de Agentes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">Tío Pepe</div>
+        <ul class="nav-menu">
+            <li><a href="/">Dashboard</a></li>
+            <li><a href="/tasks">Tareas</a></li>
+            <li><a href="/agents" class="active">Agentes</a></li>
+            <li><a href="/chat">Chat</a></li>
+            <li><a href="/settings">Configuración</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <h1>Gestión de Agentes</h1>
+        
+        <div class="agent-controls">
+            <div class="search-box">
+                <input type="text" id="agent-search" placeholder="Buscar agentes...">
+            </div>
+            <div class="filter-controls">
+                <select id="agent-status-filter">
+                    <option value="all">Todos los estados</option>
+                    <option value="active">Activos</option>
+                    <option value="inactive">Inactivos</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="agent-grid">
+            <div class="agent-card" id="nlp-agent">
+                <div class="agent-header">
+                    <h2>Agente NLP</h2>
+                    <div class="agent-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                    </div>
+                </div>
+                <div class="agent-status">Estado: <span class="status-indicator">Inactivo</span></div>
+                <div class="agent-description">
+                    Procesamiento de lenguaje natural, análisis de sentimientos, generación de texto
+                </div>
+                <div class="agent-metrics">
+                    <div>Tareas Procesadas: <span class="metric">0</span></div>
+                    <div>Tasa de Éxito: <span class="metric">0%</span></div>
+                </div>
+            </div>
+
+            <div class="agent-card" id="vision-agent">
+                <div class="agent-header">
+                    <h2>Agente de Visión</h2>
+                    <div class="agent-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    </div>
+                </div>
+                <div class="agent-status">Estado: <span class="status-indicator">Inactivo</span></div>
+                <div class="agent-description">
+                    Procesamiento de imágenes, detección de objetos, clasificación
+                </div>
+                <div class="agent-metrics">
+                    <div>Tareas Procesadas: <span class="metric">0</span></div>
+                    <div>Tasa de Éxito: <span class="metric">0%</span></div>
+                </div>
+            </div>
+
+            <div class="agent-card" id="web-agent">
+                <div class="agent-header">
+                    <h2>Agente Web</h2>
+                    <div class="agent-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    </div>
+                </div>
+                <div class="agent-status">Estado: <span class="status-indicator">Inactivo</span></div>
+                <div class="agent-description">
+                    Búsqueda y extracción web, scraping, integración con APIs
+                </div>
+                <div class="agent-metrics">
+                    <div>Tareas Procesadas: <span class="metric">0</span></div>
+                    <div>Tasa de Éxito: <span class="metric">0%</span></div>
+                </div>
+            </div>
+
+            <div class="agent-card" id="data-agent">
+                <div class="agent-header">
+                    <h2>Agente de Datos</h2>
+                    <div class="agent-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-database"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+                    </div>
+                </div>
+                <div class="agent-status">Estado: <span class="status-indicator">Inactivo</span></div>
+                <div class="agent-description">
+                    Análisis de datos, transformaciones, estadísticas
+                </div>
+                <div class="agent-metrics">
+                    <div>Tareas Procesadas: <span class="metric">0</span></div>
+                    <div>Tasa de Éxito: <span class="metric">0%</span></div>
+                </div>
+            </div>
+
+            <div class="agent-card" id="planning-agent">
+                <div class="agent-header">
+                    <h2>Agente de Planificación</h2>
+                    <div class="agent-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                    </div>
+                </div>
+                <div class="agent-status">Estado: <span class="status-indicator">Inactivo</span></div>
+                <div class="agent-description">
+                    Gestión de flujos de trabajo, seguimiento de progreso
+                </div>
+                <div class="agent-metrics">
+                    <div>Tareas Procesadas: <span class="metric">0</span></div>
+                    <div>Tasa de Éxito: <span class="metric">0%</span></div>
+                </div>
+            </div>
+
+            <div class="agent-card" id="code-agent">
+                <div class="agent-header">
+                    <h2>Agente de Código</h2>
+                    <div class="agent-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-code"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                    </div>
+                </div>
+                <div class="agent-status">Estado: <span class="status-indicator">Inactivo</span></div>
+                <div class="agent-description">
+                    Generación y optimización de código, análisis estático
+                </div>
+                <div class="agent-metrics">
+                    <div>Tareas Procesadas: <span class="metric">0</span></div>
+                    <div>Tasa de Éxito: <span class="metric">0%</span></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/agents.js') }}"></script>
+</body>
+</html>`;
+
+console.log("Archivo agents.html actualizado con iconos y descripciones.");

@@ -1,0 +1,115 @@
+const tasksHtml = `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tío Pepe - Gestión de Tareas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">Tío Pepe</div>
+        <ul class="nav-menu">
+            <li><a href="/">Dashboard</a></li>
+            <li><a href="/tasks" class="active">Tareas</a></li>
+            <li><a href="/agents">Agentes</a></li>
+            <li><a href="/chat">Chat</a></li>
+            <li><a href="/settings">Configuración</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <h1>Gestión de Tareas</h1>
+
+        <div class="task-controls">
+            <button id="new-task-btn" class="btn primary">Nueva Tarea</button>
+            <div class="task-filters">
+                <select id="task-status-filter">
+                    <option value="all">Todos los Estados</option>
+                    <option value="pending">Pendientes</option>
+                    <option value="running">En Ejecución</option>
+                    <option value="completed">Completadas</option>
+                    <option value="failed">Fallidas</option>
+                </select>
+                <select id="task-agent-filter">
+                    <option value="all">Todos los Agentes</option>
+                    <option value="nlp">NLP</option>
+                    <option value="vision">Visión</option>
+                    <option value="web">Web</option>
+                    <option value="data">Datos</option>
+                    <option value="planning">Planificación</option>
+                    <option value="code">Código</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="task-list">
+            <table id="tasks-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tipo</th>
+                        <th>Agente</th>
+                        <th>Estado</th>
+                        <th>Creada</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tasks-body">
+                    <!-- Task rows will be dynamically inserted here -->
+                </tbody>
+            </table>
+        </div>
+
+        <div id="task-modal" class="modal">
+            <div class="modal-content">
+                <h2>Crear Nueva Tarea</h2>
+                <form id="task-form">
+                    <div class="form-group">
+                        <label for="task-agent">Agente</label>
+                        <select id="task-agent" required>
+                            <option value="nlp">Agente NLP</option>
+                            <option value="vision">Agente de Visión</option>
+                            <option value="web">Agente Web</option>
+                            <option value="data">Agente de Datos</option>
+                            <option value="planning">Agente de Planificación</option>
+                            <option value="code">Agente de Código</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="task-type">Tipo de Tarea</label>
+                        <select id="task-type" required>
+                            <!-- Options will be dynamically updated based on selected agent -->
+                            <option value="">Selecciona un agente primero</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="task-data">Datos de la Tarea (JSON)</label>
+                        <textarea id="task-data" rows="5" required></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn secondary" id="cancel-task">Cancelar</button>
+                        <button type="submit" class="btn primary">Crear Tarea</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="task-detail-modal" class="modal">
+            <div class="modal-content">
+                <h2>Detalles de la Tarea</h2>
+                <div id="task-detail-content">
+                    <!-- Task details will be dynamically inserted here -->
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn secondary" id="close-detail">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/tasks.js') }}"></script>
+</body>
+</html>`;
+
+console.log("Archivo tasks.html actualizado con filtros y modales mejorados.");

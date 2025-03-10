@@ -1,0 +1,83 @@
+const chatHtml = `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tío Pepe - Interfaz de Chat</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">Tío Pepe</div>
+        <ul class="nav-menu">
+            <li><a href="/">Dashboard</a></li>
+            <li><a href="/tasks">Tareas</a></li>
+            <li><a href="/agents">Agentes</a></li>
+            <li><a href="/chat" class="active">Chat</a></li>
+            <li><a href="/settings">Configuración</a></li>
+        </ul>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="chat-layout">
+            <div class="chat-sidebar">
+                <div class="agent-selector">
+                    <h3>Seleccionar Agente</h3>
+                    <select class="form-select" id="agentSelect">
+                        <option value="">Selecciona un agente...</option>
+                        <option value="nlp">Agente NLP</option>
+                        <option value="vision">Agente de Visión</option>
+                        <option value="web">Agente Web</option>
+                        <option value="data">Agente de Datos</option>
+                        <option value="planning">Agente de Planificación</option>
+                        <option value="code">Agente de Código</option>
+                    </select>
+                </div>
+                
+                <div class="agent-info" id="agentInfo">
+                    <div class="agent-info-placeholder">
+                        <p>Selecciona un agente para ver su información</p>
+                    </div>
+                    <!-- Agent info will be dynamically inserted here -->
+                </div>
+                
+                <div class="chat-history">
+                    <h3>Historial de Chat</h3>
+                    <ul id="chatHistory">
+                        <!-- Chat history will be dynamically inserted here -->
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="chat-main">
+                <div class="chat-header">
+                    <h2 id="chatTitle">Chat con Agentes</h2>
+                    <div class="chat-actions">
+                        <button id="clearChatBtn" class="btn secondary btn-sm">Limpiar Chat</button>
+                        <button id="exportChatBtn" class="btn primary btn-sm">Exportar</button>
+                    </div>
+                </div>
+                
+                <div class="chat-messages" id="chatMessages">
+                    <div class="welcome-message">
+                        <h3>Bienvenido al Sistema de Chat de Tío Pepe</h3>
+                        <p>Selecciona un agente y comienza a chatear para interactuar con el sistema.</p>
+                    </div>
+                    <!-- Messages will be dynamically added here -->
+                </div>
+                
+                <div class="chat-input">
+                    <form id="chatForm" class="d-flex gap-2">
+                        <input type="text" class="form-control" id="messageInput" placeholder="Escribe tu mensaje..." required>
+                        <button type="submit" class="btn primary">Enviar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+</body>
+</html>`;
+
+console.log("Archivo chat.html actualizado con diseño mejorado y funcionalidades adicionales.");

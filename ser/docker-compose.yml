@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_APP=main.py
+      - FLASK_ENV=production
+      - POSTGRES_HOST=db
+      - POSTGRES_DB=tiope
+      - POSTGRES_USER=tiope_user
+      - POSTGRES_PASSWORD=tiope_password
+      - REDIS_HOST=redis
+    depends_on:
+      - db
+      - redis
+
+  db:
+    image: postgres:13
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=tiope
+      - POSTGRES_USER=tiope_user
+      - POSTGRES_PASSWORD=tiope_password
+
+  redis:
+    image: redis:6
+    volumes:
+      - redis_data:/data
+
+volumes:
+  postgres_data:
+  redis_data:

@@ -1,0 +1,109 @@
+# Tío Pepe Agent Prompts
+
+code_agent:
+  # Code generation example
+  - task: "generate_python_class"
+    prompt: "Create a Python class for managing user authentication with methods for login, logout, and password reset."
+    example_input:
+      class_name: "UserAuth"
+      features: ["login", "logout", "password_reset"]
+    example_output: |
+      class UserAuth:
+          def __init__(self):
+              self.users = {}
+              
+          def login(self, username: str, password: str) -> bool:
+              # Implementation here
+              pass
+              
+  # Code optimization example
+  - task: "optimize_code"
+    prompt: "Optimize this Python function for better performance."
+    example_input:
+      code: |
+        def fibonacci(n):
+            if n <= 1: return n
+            return fibonacci(n-1) + fibonacci(n-2)
+    example_output: |
+        def fibonacci(n):
+            a, b = 0, 1
+            for _ in range(n):
+                a, b = b, a + b
+            return a
+
+nlp_agent:
+  # Text classification example
+  - task: "classify_text"
+    prompt: "Classify the sentiment of this customer review."
+    example_input:
+      text: "The product exceeded my expectations, highly recommended!"
+    example_output:
+      sentiment: "positive"
+      confidence: 0.95
+      
+  # Text generation example
+  - task: "generate_text"
+    prompt: "Generate a product description for an eco-friendly water bottle."
+    example_input:
+      keywords: ["sustainable", "reusable", "BPA-free"]
+      tone: "professional"
+    example_output:
+      description: "Our eco-friendly water bottle combines sustainability with style..."
+
+vision_agent:
+  # Object detection example
+  - task: "detect_objects"
+    prompt: "Identify and locate objects in this image."
+    example_input:
+      image_path: "path/to/image.jpg"
+      min_confidence: 0.8
+    example_output:
+      objects: [
+        {"label": "car", "confidence": 0.95, "bbox": [100, 200, 300, 400]},
+        {"label": "person", "confidence": 0.92, "bbox": [50, 100, 150, 300]}
+      ]
+
+data_agent:
+  # Data analysis example
+  - task: "analyze_dataset"
+    prompt: "Perform statistical analysis on this sales dataset."
+    example_input:
+      data_path: "data/sales_2023.csv"
+      metrics: ["mean", "median", "trend"]
+    example_output:
+      summary_stats:
+        mean_sales: 5420.50
+        median_sales: 4800.00
+        trend: "upward"
+
+planning_agent:
+  # Task planning example
+  - task: "create_workflow"
+    prompt: "Create a workflow for a software release process."
+    example_input:
+      project_type: "web_application"
+      requirements: ["testing", "deployment", "documentation"]
+    example_output:
+      workflow:
+        steps:
+          - {name: "Run Tests", order: 1}
+          - {name: "Build Documentation", order: 2}
+          - {name: "Deploy to Staging", order: 3}
+          - {name: "Final Review", order: 4}
+          - {name: "Production Deploy", order: 5}
+
+web_agent:
+  # Web scraping example
+  - task: "scrape_data"
+    prompt: "Extract product information from an e-commerce website."
+    example_input:
+      url: "https://example.com/products"
+      elements: ["title", "price", "description"]
+    example_output:
+      products: [
+        {
+          "title": "Product 1",
+          "price": "$29.99",
+          "description": "Product description here"
+        }
+      ]

@@ -1,0 +1,8 @@
+# Performance optimization dependencies
+Pillow>=9.0.0  # For image optimization
+csscompressor>=0.9.5  # For CSS minification
+jsmin>=3.0.0  # For JavaScript minification
+prometheus-client>=0.16.0  # For performance monitoring
+psutil>=5.9.0  # For system metrics collection
+flask-compress>=1.13  # For response compression
+werkzeug>=2.0.0  # For middleware support

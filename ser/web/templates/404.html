@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tío Pepe - Página No Encontrada</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">Tío Pepe</div>
+        <ul class="nav-menu">
+            <li><a href="/">Dashboard</a></li>
+            <li><a href="/tasks">Tareas</a></li>
+            <li><a href="/agents">Agentes</a></li>
+            <li><a href="/chat">Chat</a></li>
+            <li><a href="/settings">Configuración</a></li>
+        </ul>
+    </nav>
+
+    <main class="container error-container">
+        <div class="error-content">
+            <div class="error-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            </div>
+            <h1>404 - Página No Encontrada</h1>
+            <p>Lo siento, la página que estás buscando no existe.</p>
+            <p>La página que buscas puede haber sido eliminada, ha cambiado de nombre o no está disponible temporalmente.</p>
+            <div class="error-actions">
+                <a href="/" class="btn primary">Ir al Dashboard</a>
+                <button onclick="history.back()" class="btn secondary">Volver Atrás</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/error.js') }}"></script>
+</body>
+</html>
+
+console.log("Archivo 404.html actualizado con icono y mejor diseño.");

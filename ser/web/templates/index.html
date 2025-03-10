@@ -1,0 +1,73 @@
+const indexHtml = `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tío Pepe - Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">Tío Pepe</div>
+        <ul class="nav-menu">
+            <li><a href="{{ url_for('index') }}" class="active">Dashboard</a></li>
+            <li><a href="{{ url_for('tasks') }}">Tareas</a></li>
+            <li><a href="{{ url_for('agents') }}">Agentes</a></li>
+            <li><a href="{{ url_for('chat') }}">Chat</a></li>
+            <li><a href="{{ url_for('settings') }}">Configuración</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <h1>Panel de Control del Sistema</h1>
+        
+        <div class="dashboard-grid">
+            <div class="card">
+                <h2>Tareas Activas</h2>
+                <div id="active-tasks-count" class="metric">0</div>
+            </div>
+            
+            <div class="card">
+                <h2>Agentes Activos</h2>
+                <div id="active-agents-count" class="metric">0</div>
+            </div>
+            
+            <div class="card">
+                <h2>Estado del Sistema</h2>
+                <div id="system-status" class="status">Saludable</div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <h2>Rendimiento de Agentes</h2>
+                    <div class="agent-performance">
+                        <canvas id="agentPerformanceChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <h2>Distribución de Tareas</h2>
+                    <div class="task-distribution">
+                        <canvas id="taskDistributionChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="recent-activity">
+            <h2>Actividad Reciente</h2>
+            <div id="activity-feed" class="activity-list">
+                <!-- Activity items will be dynamically inserted here -->
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>`;
+
+console.log("Archivo index.html actualizado con gráficos de rendimiento.");

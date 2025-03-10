@@ -1,0 +1,60 @@
+# Authentication Configuration for Tío Pepe
+
+# JWT Token Settings
+jwt:
+  secret_key: ${TIO_PEPE_JWT_SECRET}
+  algorithm: HS256
+  access_token_expire_minutes: 30
+  refresh_token_expire_days: 7
+
+# API Authentication
+api_auth:
+  enable_auth: true
+  allowed_origins:
+    - "http://localhost:8000"
+    - "http://localhost:3000"
+  rate_limit:
+    requests_per_minute: 60
+    burst_size: 100
+
+# OAuth2 Providers
+oauth2:
+  google:
+    client_id: ${TIO_PEPE_GOOGLE_CLIENT_ID}
+    client_secret: ${TIO_PEPE_GOOGLE_CLIENT_SECRET}
+    redirect_uri: "http://localhost:8000/auth/google/callback"
+    scopes:
+      - "openid"
+      - "email"
+      - "profile"
+  github:
+    client_id: ${TIO_PEPE_GITHUB_CLIENT_ID}
+    client_secret: ${TIO_PEPE_GITHUB_CLIENT_SECRET}
+    redirect_uri: "http://localhost:8000/auth/github/callback"
+    scopes:
+      - "user"
+      - "user:email"
+
+# Security Settings
+security:
+  password_hash_algorithm: "bcrypt"
+  min_password_length: 8
+  require_special_chars: true
+  require_numbers: true
+  max_login_attempts: 5
+  lockout_duration_minutes: 15
+
+# Session Management
+session:
+  enable_session: true
+  session_cookie_name: "tio_pepe_session"
+  session_lifetime_hours: 24
+  secure_cookie: true
+  same_site: "Lax"
+
+# API Keys
+api_keys:
+  enable_api_keys: true
+  key_prefix: "tp_"
+  key_expiry_days: 90
+  max_keys_per_user: 5

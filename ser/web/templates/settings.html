@@ -1,0 +1,166 @@
+const settingsHtml = `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tío Pepe - Configuración</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">Tío Pepe</div>
+        <ul class="nav-menu">
+            <li><a href="/">Dashboard</a></li>
+            <li><a href="/tasks">Tareas</a></li>
+            <li><a href="/agents">Agentes</a></li>
+            <li><a href="/chat">Chat</a></li>
+            <li><a href="/settings" class="active">Configuración</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <h1>Configuración del Sistema</h1>
+        
+        <div class="settings-tabs">
+            <div class="tab-nav">
+                <button class="tab-btn active" data-tab="general">General</button>
+                <button class="tab-btn" data-tab="api">API</button>
+                <button class="tab-btn" data-tab="agents">Agentes</button>
+                <button class="tab-btn" data-tab="advanced">Avanzado</button>
+            </div>
+            
+            <div class="tab-content">
+                <div class="tab-pane active" id="general-tab">
+                    <div class="settings-section">
+                        <h2>Configuración General</h2>
+                        <form id="general-settings-form">
+                            <div class="form-group">
+                                <label for="system-name">Nombre del Sistema</label>
+                                <input type="text" id="system-name" value="Tío Pepe">
+                            </div>
+                            <div class="form-group">
+                                <label for="log-level">Nivel de Logging</label>
+                                <select id="log-level">
+                                    <option value="debug">Debug</option>
+                                    <option value="info" selected>Info</option>
+                                    <option value="warning">Warning</option>
+                                    <option value="error">Error</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="language">Idioma</label>
+                                <select id="language">
+                                    <option value="es" selected>Español</option>
+                                    <option value="en">English</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn primary">Guardar Configuración</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="tab-pane" id="api-tab">
+                    <div class="settings-section">
+                        <h2>Configuración de API</h2>
+                        <form id="api-settings-form">
+                            <div class="form-group">
+                                <label for="api-url">URL de API</label>
+                                <input type="text" id="api-url" value="http://localhost:5000">
+                            </div>
+                            <div class="form-group">
+                                <label for="api-key">Clave de API</label>
+                                <div class="input-with-button">
+                                    <input type="password" id="api-key" value="••••••••••••••••">
+                                    <button type="button" class="btn secondary" id="show-api-key">Mostrar</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="api-timeout">Timeout (segundos)</label>
+                                <input type="number" id="api-timeout" value="30" min="5" max="120">
+                            </div>
+                            <button type="submit" class="btn primary">Actualizar Configuración de API</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="tab-pane" id="agents-tab">
+                    <div class="settings-section">
+                        <h2>Configuración de Agentes</h2>
+                        <form id="agent-settings-form">
+                            <div class="form-group">
+                                <label for="agent-timeout">Timeout de Agentes (segundos)</label>
+                                <input type="number" id="agent-timeout" value="30" min="5" max="300">
+                            </div>
+                            <div class="form-group">
+                                <label for="max-agents">Máximo de Agentes Concurrentes</label>
+                                <input type="number" id="max-agents" value="5" min="1" max="10">
+                            </div>
+                            <div class="form-group">
+                                <label>Agentes Habilitados</label>
+                                <div class="checkbox-group">
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="enable-nlp" checked>
+                                        <label for="enable-nlp">Agente NLP</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="enable-vision" checked>
+                                        <label for="enable-vision">Agente de Visión</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="enable-web" checked>
+                                        <label for="enable-web">Agente Web</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="enable-data" checked>
+                                        <label for="enable-data">Agente de Datos</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="enable-planning" checked>
+                                        <label for="enable-planning">Agente de Planificación</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="enable-code" checked>
+                                        <label for="enable-code">Agente de Código</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn primary">Actualizar Configuración de Agentes</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="tab-pane" id="advanced-tab">
+                    <div class="settings-section">
+                        <h2>Configuración Avanzada</h2>
+                        <form id="advanced-settings-form">
+                            <div class="form-group">
+                                <label for="memory-limit">Límite de Memoria (MB)</label>
+                                <input type="number" id="memory-limit" value="1024" min="256" max="4096">
+                            </div>
+                            <div class="form-group">
+                                <label for="storage-path">Ruta de Almacenamiento</label>
+                                <input type="text" id="storage-path" value="./data">
+                            </div>
+                            <div class="form-group">
+                                <label for="debug-mode">Modo Debug</label>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="debug-mode">
+                                    <label for="debug-mode" class="toggle-label"></label>
+                                </div>
+                            </div>
+                            <div class="alert alert-warning">
+                                <strong>Advertencia:</strong> Cambiar la configuración avanzada puede afectar el rendimiento del sistema.
+                            </div>
+                            <button type="submit" class="btn primary">Guardar Configuración Avanzada</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/settings.js') }}"></script>
+</body>
+</html>`;
+
+console.log("Archivo settings.html actualizado con pestañas y opciones avanzadas.");

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tío Pepe - Dashboard</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            padding: 1rem;
+        }
+        .widget {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 1rem;
+            min-height: 200px;
+        }
+        .widget-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .widget-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .chart-container {
+            width: 100%;
+            height: calc(100% - 40px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Dashboard</h1>
+            <div class="dashboard-controls">
+                <button id="addWidget" class="btn primary">Add Widget</button>
+                <button id="saveLayout" class="btn secondary">Save Layout</button>
+            </div>
+        </header>
+        
+        <div class="dashboard-grid" id="dashboardGrid">
+            <!-- Widgets will be dynamically added here -->
+        </div>
+
+        <!-- Widget Template Modal -->
+        <div id="widgetModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <h2>Add New Widget</h2>
+                <form id="widgetForm">
+                    <div class="form-group">
+                        <label for="widgetType">Visualization Type</label>
+                        <select id="widgetType" required>
+                            <option value="lineChart">Line Chart</option>
+                            <option value="barChart">Bar Chart</option>
+                            <option value="pieChart">Pie Chart</option>
+                            <option value="heatmap">Heatmap</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="dataSource">Data Source</label>
+                        <select id="dataSource" required>
+                            <option value="systemMetrics">System Metrics</option>
+                            <option value="taskActivity">Task Activity</option>
+                            <option value="agentPerformance">Agent Performance</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="widgetTitle">Widget Title</label>
+                        <input type="text" id="widgetTitle" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn primary">Add Widget</button>
+                        <button type="button" class="btn secondary" onclick="closeModal()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dashboard state management
+        let dashboardState = {
+            widgets: []
+        };
+
+        // Widget creation and management
+        function createWidget(type, dataSource, title) {
+            const widget = document.createElement('div');
+            widget.className = 'widget';
+            widget.innerHTML = `
+                <div class="widget-header">
+                    <h3>${title}</h3>
+                    <div class="widget-controls">
+                        <button class="btn small" onclick="refreshWidget(this)">Refresh</button>
+                        <button class="btn small danger" onclick="removeWidget(this)">Remove</button>
+                    </div>
+                </div>
+                <div class="chart-container" id="chart-${Date.now()}"></div>
+            `;
+            return widget;
+        }
+
+        // Modal management
+        function showModal() {
+            document.getElementById('widgetModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('widgetModal').style.display = 'none';
+        }
+
+        // Event listeners
+        document.getElementById('addWidget').addEventListener('click', showModal);
+
+        document.getElementById('widgetForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const type = document.getElementById('widgetType').value;
+            const dataSource = document.getElementById('dataSource').value;
+            const title = document.getElementById('widgetTitle').value;
+
+            const widget = createWidget(type, dataSource, title);
+            document.getElementById('dashboardGrid').appendChild(widget);
+            
+            // Initialize the visualization based on type
+            initializeVisualization(widget.querySelector('.chart-container'), type, dataSource);
+            
+            closeModal();
+            e.target.reset();
+        });
+
+        // D3.js visualization initialization
+        function initializeVisualization(container, type, dataSource) {
+            // Example visualization initialization
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            const svg = d3.select(container)
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height);
+
+            // Fetch data and create visualization based on type
+            fetchData(dataSource).then(data => {
+                switch(type) {
+                    case 'lineChart':
+                        createLineChart(svg, data, width, height);
+                        break;
+                    case 'barChart':
+                        createBarChart(svg, data, width, height);
+                        break;
+                    case 'pieChart':
+                        createPieChart(svg, data, width, height);
+                        break;
+                    case 'heatmap':
+                        createHeatmap(svg, data, width, height);
+                        break;
+                }
+            });
+        }
+
+        // Example data fetching function
+        async function fetchData(dataSource) {
+            // This would be replaced with actual API calls
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    resolve(generateSampleData(dataSource));
+                }, 500);
+            });
+        }
+
+        // Sample data generation
+        function generateSampleData(dataSource) {
+            switch(dataSource) {
+                case 'systemMetrics':
+                    return Array.from({length: 24}, (_, i) => ({
+                        time: i,
+                        value: Math.random() * 100
+                    }));
+                case 'taskActivity':
+                    return Array.from({length: 10}, (_, i) => ({
+                        category: `Task ${i}`,
+                        value: Math.random() * 100
+                    }));
+                default:
+                    return [];
+            }
+        }
+
+        // Example visualization functions
+        function createLineChart(svg, data, width, height) {
+            const margin = {top: 20, right: 20, bottom: 30, left: 40};
+            const innerWidth = width - margin.left - margin.right;
+            const innerHeight = height - margin.top - margin.bottom;
+
+            const x = d3.scaleLinear()
+                .domain([0, data.length - 1])
+                .range([0, innerWidth]);
+
+            const y = d3.scaleLinear()
+                .domain([0, d3.max(data, d => d.value)])
+                .range([innerHeight, 0]);
+
+            const line = d3.line()
+                .x(d => x(d.time))
+                .y(d => y(d.value));
+
+            const g = svg.append('g')
+                .attr('transform', `translate(${margin.left},${margin.top})`);
+
+            g.append('path')
+                .datum(data)
+                .attr('class', 'line')
+                .attr('fill', 'none')
+                .attr('stroke', 'steelblue')
+                .attr('stroke-width', 1.5)
+                .attr('d', line);
+
+            g.append('g')
+                .attr('transform', `translate(0,${innerHeight})`)
+                .call(d3.axisBottom(x));
+
+            g.append('g')
+                .call(d3.axisLeft(y));
+        }
+
+        // Additional visualization functions would be implemented similarly
+        function createBarChart(svg, data, width, height) {
+            // Implementation for bar chart
+        }
+
+        function createPieChart(svg, data, width, height) {
+            // Implementation for pie chart
+        }
+
+        function createHeatmap(svg, data, width, height) {
+            // Implementation for heatmap
+        }
+
+        // Widget management functions
+        function refreshWidget(button) {
+            const widget = button.closest('.widget');
+            const container = widget.querySelector('.chart-container');
+            container.innerHTML = '';
+            const type = widget.dataset.type;
+            const dataSource = widget.dataset.dataSource;
+            initializeVisualization(container, type, dataSource);
+        }
+
+        function removeWidget(button) {
+            const widget = button.closest('.widget');
+            widget.remove();
+            // Update dashboard state
+            saveDashboardState();
+        }
+
+        // Dashboard state persistence
+        function saveDashboardState() {
+            const widgets = Array.from(document.querySelectorAll('.widget')).map(widget => ({
+                type: widget.dataset.type,
+                dataSource: widget.dataset.dataSource,
+                title: widget.querySelector('h3').textContent
+            }));
+            dashboardState.widgets = widgets;
+            // Save to backend
+            // fetch('/api/dashboard/save', {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify(dashboardState)
+            // });
+        }
+
+        document.getElementById('saveLayout').addEventListener('click', saveDashboardState);
+    </script>
+</body>
+</html>
